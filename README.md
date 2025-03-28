@@ -1,7 +1,10 @@
 # 🧠 Local Multi-Agent Image Analysis with Open Source Tools
 
+
 A fully offline, open-source AI system that extracts, interprets, and summarizes insights from any image — graphs, screenshots, dashboards, or photos — using **CrewAI**, **Streamlit**, and **Ollama-powered local LLMs**.
-![App Screenshot](images/app.png)
+
+![App Interface](images/app.png)
+
 ---
 
 ## 🖼️ What It Does
