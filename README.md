@@ -3,7 +3,7 @@
 
 A fully offline, open-source AI system that extracts, interprets, and summarizes insights from any image — graphs, screenshots, dashboards, or photos — using **CrewAI**, **Streamlit**, and **Ollama-powered local LLMs**.
 
-![App Interface](images/app.png)
+![App Screenshot](ImageAnalyser/images/app.png)
 
 ---
 
