@@ -1,193 +1,46 @@
-# 🧠 Local Multi-Agent Image Analysis with Open Source Tools
+# 🧠 Agentic AI with Ollama
 
-
-A fully offline, open-source AI system that extracts, interprets, and summarizes insights from any image — graphs, screenshots, dashboards, or photos — using **CrewAI**, **Streamlit**, and **Ollama-powered local LLMs**.
-
-![App Screenshot](ImageAnalyser/images/app.png)
+A collection of experiments, projects, and tools that explore **Agentic AI systems** using **open-source models via [Ollama](https://ollama.com/)**.  
+This repository documents the journey of building powerful, privacy-preserving AI workflows — all running locally.
 
 ---
 
-## 🖼️ What It Does
+## 🧪 Use Cases
 
-- 🧩 Breaks down visual data using **specialized agents** for text extraction, layout analysis, context reasoning, and narrative generation
-- 🔍 Detects insights from charts, screenshots, infographics, and more
-- 🤖 Simulates human-like understanding using a **multi-agent cognitive pipeline**
-- 🔐 Runs entirely **locally** using open-source models — **no API keys, no cloud**
+### 1. 📸 **ImageAnalyser**  
+A fully offline multi-agent system that interprets any image — including charts, dashboards, and screenshots — using local LLMs. It mimics how a human would extract text, detect layout, understand context, and summarize insights.  
+🛠️ Built with: CrewAI, Streamlit, Langchain, Unstructured, Ollama.  
+📂 Path: `ImageAnalyser/`  
+🔗 [Read full documentation](ImageAnalyser/README.md)
 
----
-
-## 🧰 Tech Stack
-
-- [CrewAI](https://github.com/joaomdmoura/crewAI) – Multi-agent framework for complex task delegation
-- [Ollama](https://ollama.com) – Local LLMs like `gemma`, `phi`, `granite`, `mxbai-embed-large`
-- Streamlit – Simple front-end to upload and analyze images
-- Langchain + Unstructured – OCR and text extraction from visual files
+> *More use cases will be added as this repo evolves.*
 
 ---
 
-## 📦 Project Structure
+## 🔧 Tech Stack
 
-```
-.
-├── app.py               # Streamlit frontend
-├── crew.py              # Core logic: agents + tasks
-├── tools.py             # Custom tools (OCR, layout detection)
-├── config/
-│   ├── agents.yaml      # Agent definitions
-│   └── tasks.yaml       # Task definitions
-├── temp/                # Uploaded images
-├── images/              # App images
-├── requirements.txt     # Dependencies
-└── README.md
-```
+- **🧠 LLMs:** Open-source models via Ollama (e.g., Gemma, Granite, Phi)
+- **🧩 Agent Framework:** [CrewAI](https://docs.crewai.com/)
+- **🔎 Text & Layout Tools:** Langchain + Unstructured
+- **🌐 Frontend:** Streamlit
+- **🛡️ Privacy-first:** All logic runs locally — no external API calls
 
 ---
 
-## ⚙️ How It Works
+## 📌 Goals
 
-### 🔹 Agents (`config/agents.yaml`)
-
-Each agent is a specialist with a defined responsibility:
-
-- **Senior Vision-to-Text Specialist** → Extracts readable text from the image
-- **Senior Visual Structure Analyst** → Interprets layout and element positions
-- **Senior Visual Insight Architect** → Determines what is important and why
-- **Senior Insight Narrator** → Produces a high-level human-like narrative
-
-They run entirely on **local LLMs** via Ollama.
-
-### 🔹 Tasks (`config/tasks.yaml`)
-
-Tasks are delegated based on each agent’s strengths:
-
-- Extract text
-- Analyze layout
-- Determine image context and key elements
-- Generate narrative summary
-
-### 🔹 Tools (`tools.py`)
-
-Instead of using `crewai.tools.VisionTool` (which doesn’t work with Ollama/local models), we created **custom tools**:
-
-- `TextExtractionTool` – Uses `UnstructuredImageLoader` for OCR
-- `ObjectLocationTool` – Simulates spatial understanding of elements in image
-
-These tools receive the image path and feed insights back to the agents.
+- Demonstrate modular and scalable agent workflows with local models  
+- Provide offline-friendly AI applications that respect data privacy  
+- Showcase different use cases for agent-based reasoning (e.g., vision, reasoning, summarization)  
+- Create reusable templates for future projects using YAML-driven configurations  
 
 ---
 
-## 🧠 Crew Execution (`crew.py`)
+## 🚀 Get Started
 
-All agents and tasks are initialized and orchestrated through this function:
-
-```python
-def process_image(image_path: str):
-    tasks = initialize_tasks(image_path)
-    crew = Crew(
-        agents=list(agents.values()),
-        tasks=tasks,
-        verbose=True,
-        max_iterations=10,  # Prevent infinite loops
-        embedder={"provider": "ollama", "config": {"model": "mxbai-embed-large"}}
-    )
-    result = crew.kickoff()
-    return {
-        "tasks_output": [task.output.__dict__ for task in crew.tasks],
-        "token_usage": str(crew.usage_metrics),
-    }
-```
-
-This ensures clean task execution, safe looping, and shared memory between agents via local embedding models.
-
----
-
-## 🚀 Getting Started
-
-### 1. Clone and Install
+To explore a use case:
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/local-image-analyzer
-cd local-image-analyzer
+cd ImageAnalyser
 pip install -r requirements.txt
-```
-
-### 2. Start Ollama + Load Models
-
-Make sure [Ollama](https://ollama.com) is installed and running.
-
-Install the models:
-
-```bash
-ollama run gemma
-ollama run phi
-ollama run granite
-ollama run mxbai-embed-large
-```
-
-### 3. Launch the App
-
-```bash
 streamlit run app.py
-```
-
----
-
-## 📝 Sample Output
-
-```
-📝 Summary
-🔹 Task 1: Text Extraction → Extracted citation metrics
-🔹 Task 2: Layout Analysis → Identified grid layout of labels/values
-🔹 Task 3: Context Reasoning → Prioritized metrics like h-index, i10-index
-🔹 Task 4: Human Summary → Explained citation growth, patterns, and impact
-```
-
----
-
-## 💡 Key Advantages
-
-- **100% local**: No internet connection or OpenAI API key needed — perfect for secure, offline environments.
-- **Open-source models**: Full transparency, customizable, and reproducible for enterprise use.
-- **Modular YAML config**: Agents and tasks defined declaratively — scalable and clean.
-- **Multi-domain ready**: Works with charts, dashboards, web UI, scenes, infographics, and more.
-
----
-
-## 📈 Built For
-
-- Privacy-sensitive AI research
-- Educational analytics projects
-- Visual summarization pipelines
-- Document intelligence for offline environments
-
----
-
-## 🧱 Future Work
-
-- Use LayoutLM or vision transformers for real layout analysis
-- Add follow-up Q&A on image contents
-- Extend to medical, industrial, or legal domains
-
----
-
-## 🤝 Contributing
-
-PRs welcome! Let’s make local agentic intelligence stronger together.
-
----
-
-## 📄 License
-
-MIT – do what you want, just give credit.
-
----
-
-## 🙌 Acknowledgments
-
-- [CrewAI](https://github.com/joaomdmoura/crewAI)
-- [Ollama](https://ollama.com)
-- Langchain, Unstructured, Streamlit
-
----
-
-Built with ❤️ for the open-source AI community.
