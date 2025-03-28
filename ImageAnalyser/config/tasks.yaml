@@ -1,0 +1,35 @@
+- description: >
+    Detect and extract all visible text from the provided image. This includes printed, stylized, 
+    embedded, or handwritten content in charts, screenshots, infographics, and natural photographs.
+  expected_output: >
+    A clean and readable text output extracted from the image. If no text is detected, respond accordingly.
+  agent: text_extractor
+
+- description: >
+    Analyze the visual layout and spatial positioning of objects, labels, and elements in the image.
+    This includes recognizing how items are grouped, arranged, and aligned across UI designs, documents, 
+    or scene photos.
+  expected_output: >
+    A clear and structured explanation of the layout, including any relative positions and organizational patterns.
+  agent: layout_identifier
+
+- description: >
+    Analyze the extracted visual and textual information to determine:
+    (1) the domain and purpose of the image,
+    (2) which elements are most significant,
+    and (3) identify key trends or patterns in the data (e.g., increasing/decreasing, spikes, flat lines).
+    If numerical values are present, perform a basic analysis of their movement over time or grouping.
+    Avoid simply repeating the labels — instead, reason about what the numbers and layout are indicating.
+  expected_output: >
+    A contextual briefing with:
+    - The image domain and user intent
+    - A prioritized list of important elements with justifications
+    - A paragraph summarizing any trends, insights, or patterns visible in the data (e.g., 'Citations peaked in 2024, then dropped sharply in 2025')
+  agent: visual_architect
+
+- description: >
+    Generate a human-readable summary of the image using extracted text, layout analysis, contextual briefing, and trend insights.
+    Emphasize not just what is shown, but what it means: highlight patterns, growth or decline, and how the layout supports these interpretations.
+  expected_output: >
+    A narrative summary that combines content, structure, and reasoning — reflecting both what the image says and what it means.
+  agent: visual_summarizer
