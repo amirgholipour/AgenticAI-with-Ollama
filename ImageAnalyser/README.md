@@ -1,5 +1,5 @@
 # 🧠 Local Multi-Agent Image Analysis with Open Source Tools
-[Local Multi-Agent Image Analysis with Open Source Tools](https://github.com/joaomdmoura/crewAI)
+[Local Multi-Agent Image Analysis with Open Source Tools](https://medium.com/@saeedamirgholipour/building-a-local-multi-agent-image-understanding-system-with-open-source-tools-55e380275679)
 
 A fully offline, open-source AI system that extracts, interprets, and summarizes insights from any image — graphs, screenshots, dashboards, or photos — using **CrewAI**, **Streamlit**, and **Ollama-powered local LLMs**.
 
