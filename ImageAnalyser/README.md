@@ -37,6 +37,7 @@ A fully offline, open-source AI system that extracts, interprets, and summarizes
 │   └── tasks.yaml       # Task definitions
 ├── temp/                # Uploaded images
 ├── images/              # App images
+├── output-files         # Overall flow
 ├── requirements.txt     # Dependencies
 └── README.md
 ```
