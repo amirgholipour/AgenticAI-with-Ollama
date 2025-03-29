@@ -15,7 +15,7 @@ if uploaded_file:
     with open(image_path, "wb") as f:
         f.write(uploaded_file.getbuffer())
 
-    st.image(image_path, caption="Uploaded Image", use_column_width=True)
+    st.image(image_path, caption="Uploaded Image", use_container_width=True)
     st.write("Analyzing image...")
 
     result = process_image(image_path)
@@ -46,5 +46,6 @@ if uploaded_file:
     else:
         st.warning("No structured task output available.")
     
-
+    if "flow" in result:
+        result["flow"].plot("output-files/OverallFlow")
     # st.write(result)

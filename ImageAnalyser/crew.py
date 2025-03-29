@@ -86,6 +86,45 @@ def initialize_tasks(image_path: str):
         tasks.append(task)
     return tasks
 
+
+def create_flow():
+    from crewai.flow.flow import Flow, start, listen,and_
+    from pydantic import BaseModel
+    
+    class MyFlow(Flow):
+        model = "MultiAgentImageFlow"
+    
+        @start()
+        def Initialize_Tasks(self):
+            # Your task implementation
+            return "Start Task Output"
+    
+        @listen(Initialize_Tasks)
+        def Text_Extraction(self, input_data):
+            # Your next task implementation
+            return f"Processed: {input_data}"
+            
+        @listen(Initialize_Tasks)
+        def Layout_Identification(self, input_data):
+            # Your next task implementation
+            return f"Processed: {input_data}"
+    
+        @listen(and_(Layout_Identification,Text_Extraction))
+        def Visual_Architecture(self, input_data):
+            # Your next task implementation
+            return f"Processed: {input_data}"
+    
+    
+        @listen(and_(Visual_Architecture,Layout_Identification,Text_Extraction))
+        def Visual_Summary(self, input_data):
+            # Your next task implementation
+            return f"Processed: {input_data}"
+    flow = MyFlow()
+    return flow
+    
+
+        
+
 # ----------- Crew Flow -----------
 def process_image(image_path: str):
     tasks = initialize_tasks(image_path)
@@ -100,6 +139,8 @@ def process_image(image_path: str):
         }
     )
     result = crew.kickoff()
+    flow= create_flow()
     return {
             "tasks_output": [task.output.__dict__ for task in crew.tasks],
-            "token_usage": str(crew.usage_metrics),}
+            "token_usage": str(crew.usage_metrics),
+            "flow" :flow}
