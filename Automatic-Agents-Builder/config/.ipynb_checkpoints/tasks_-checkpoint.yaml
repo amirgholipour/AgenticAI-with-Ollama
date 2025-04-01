@@ -1,0 +1,22 @@
+extract_text_content:
+  description: Extract text from the image located at {{image_path}} using the Text
+    Extraction Tool.
+  expected_output: A list of all visible text content extracted from the image.
+  agent: text_extractor
+  context_task_names: []
+analyze_layout:
+  description: Analyze the spatial layout and positions of key UI elements in the
+    image located at {{image_path}} using the Object Location Tool.
+  expected_output: A detailed description of the spatial layout and positions of key
+    UI elements.
+  agent: layout_analyzer
+  context_task_names: []
+synthesize_summary:
+  description: Synthesize the extracted text content and layout information into a
+    concise summary describing the board's structure and content.
+  expected_output: A concise summary that integrates both the text content and spatial
+    layout of the image.
+  agent: summary_synthesizer
+  context_task_names:
+  - extract_text_content
+  - analyze_layout

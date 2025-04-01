@@ -1,0 +1,94 @@
+analyze_user_goal:
+  description: >
+    Analyze the following user goal and break it into specific subgoals:
+
+    User Request: "{user_goal}"
+    
+    Important: Try to solve the user request using the minimum number of agents and tasks possible.
+    Avoid redundancy. Do not exceed 8 total steps (including all tasks and agents), unless absolutely necessary.
+    **Crucially:** You must keep in your mind the I want to answer the user ask!
+    
+  expected_output: A structured list of subgoals or focus areas derived from the user goal.
+  agent: goal_analyst
+  context_task_names: []
+
+analyze_supporting_data:
+  description: >
+    Review the subgoals from `analyze_user_goal`, the available data keys {{data_keys_description}}, and available tools:
+
+    Tools:
+    {{tool_descriptions}} or 'No specific tools available'
+
+    Identify how each data key and tool can support the user's goal. Think about placeholder usage (e.g., {{data}}, {{image_path}}).
+  expected_output: Insights about which data/tool can support each subgoal and which placeholders to reference.
+  agent: data_context_agent
+  context_task_names:
+    - analyze_user_goal
+
+design_agents_and_tasks:
+  description: >
+    Based on the subgoals and insights, create at most 4 CrewAI-compatible agents and 4 tasks.
+
+    Agents must each have:
+    - Unique `role`
+    - `goal`
+    - `backstory`
+    - and optionally `assigned_tool_names` from the Available Tools list. Only assign tools relevant to the agent's goal.
+
+    Tasks must each have:
+    - `name`
+    - `description` (use placeholders like {{data}}, not actual values)
+    - `expected_output`
+    - `agent_role` (matching one of the defined agent roles)
+    - `context_task_names` (a list of task names that must be completed before this task can start)
+
+    Ensure the tasks logically flow towards the final goal. The final task should synthesize the results.
+
+    **Crucially:** If a task needs to use data associated with a specific key (like 'image_path'), its `description` must include the placeholder exactly like this: {{image_path}}. Do NOT insert the actual value yourself.
+
+    Output the plan ONLY as a valid JSON object:
+    {{
+          "agents": [
+            {{
+              "role": "Unique Role Name",
+              "goal": "Specific goal for this agent",
+              "backstory": "Brief relevant backstory",
+              "assigned_tool_names": ["Tool Name 1", "Tool Name 2"]
+            }}
+          ],
+          "tasks": [
+            {{
+              "name": "unique_task_name_1",
+              "description": "Detailed description, possibly including placeholders like {{image_path}}",
+              "expected_output": "Clear description of what this task should produce",
+              "agent_role": "Unique Role Name",
+              "context_task_names": []
+            }},
+            {{
+              "name": "unique_task_name_2",
+              "description": "Another task description",
+              "expected_output": "Expected result",
+              "agent_role": "Another Unique Role Name",
+              "context_task_names": ["unique_task_name_1"]
+            }}
+          ]
+        }}
+  expected_output: Draft JSON object with agents and tasks following CrewAI structure.
+  agent: architecture_agent
+  context_task_names:
+    - analyze_supporting_data
+
+finalize_output_json:
+  description: >
+    Validate and finalize the JSON plan received from the previous task.
+
+    ✅ Ensure JSON includes:
+    - At least 4 agents and 4 tasks.
+    - Proper CrewAI format (agents/tasks arrays).
+    - No additional explanation or markdown.
+
+    Final output must be usable as YAML to generate agents.yaml and tasks.yaml.
+  expected_output: Strictly valid JSON object with 'agents' and 'tasks' arrays.
+  agent: formatter_agent
+  context_task_names:
+    - design_agents_and_tasks

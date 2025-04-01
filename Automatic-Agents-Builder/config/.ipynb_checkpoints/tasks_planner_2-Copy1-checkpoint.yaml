@@ -1,0 +1,103 @@
+analyze_user_goal:
+  description: >
+    Interpret the user's request: "{user_goal}". Extract core objectives and list constraints.
+  expected_output: >
+    A bullet-point summary listing the key goals and constraints.
+  agent: goal_analyst
+  context_task_names: []
+
+decompose_into_tasks:
+  description: >
+    Based on the goal summary, create a sequence of tasks with dependencies. 
+  expected_output: >
+    JSON object with task names, descriptions, and dependencies.
+  agent: task_designer
+  context_task_names:
+    - analyze_user_goal
+
+design_agents:
+  description: >
+    For each task, define a specialized agent.
+
+    Assign tools based on the task's nature.
+
+    Tools available:
+
+    {{tool_descriptions}}
+  expected_output: >
+    JSON array of agent definitions (role, goal, backstory, tool names).
+  agent: agent_architect
+  context_task_names:
+    - decompose_into_tasks
+
+compile_plan:
+  description: >
+    Compile tasks and agents into YAML format.
+
+    Include:
+
+    - Agents (role, goal, backstory, tools)
+    - Tasks (name, description, output, agent_role, dependencies)
+
+    Use {{image_path}} style placeholders for dynamic values.
+
+    Output must be a valid JSON object.
+
+    Tools available:
+
+    {{tool_descriptions}}
+  expected_output: |
+    Output the plan ONLY as a valid JSON object adhering strictly to the following structure. Do not include json markdown or any other text outside the JSON structure itself.
+    {{
+      "agents": [
+        {{
+          "name": "Unique_Role_Name",
+          "role": "Unique Role Name",
+          "goal": "Specific goal for this agent",
+          "backstory": "Brief relevant backstory",
+          "assigned_tool_names": ["Tool Name 1", "Tool Name 2"]
+        }},
+
+        {{
+          "name": "Another_Unique_Role_Name",
+          "role": "Another Unique Role Name",
+          "goal": "Specific goal for this agent",
+          "backstory": "Brief relevant backstory",
+          "assigned_tool_names": ["Tool Name 1", "Tool Name 2"]
+        }},
+        
+        
+      ],
+      "tasks": [
+        {{
+          "name": "unique_task_name_1",
+          "description": "Detailed description, possibly including placeholders like {{image_path}}",
+          "expected_output": "Clear description of what this task should produce",
+          "agent_role": "Unique_Role_Name",
+          "context_task_names": []
+        }},
+        {{
+          "name": "unique_task_name_2",
+          "description": "Another task description",
+          "expected_output": "Expected result",
+          "agent_role": "Another_Unique_Role_Name",
+          "context_task_names": ["unique_task_name_1"]
+        }}
+      ]
+    }}
+
+    Respond ONLY with the JSON object.
+  agent: plan_assembler
+  context_task_names:
+    - design_agents
+    - decompose_into_tasks
+
+validate_plan:
+  description: >
+    Review the JSON for errors, syntax issues, tool mismatches, and placeholder misuse.
+  expected_output: >
+    Bullet-point checklist or 'Valid Plan'.
+    Output the plan ONLY as a valid JSON object adhering strictly to the following structure. 
+  agent: plan_validator
+  context_task_names:
+    - compile_plan

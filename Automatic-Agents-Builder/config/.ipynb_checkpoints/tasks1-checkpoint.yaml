@@ -1,0 +1,29 @@
+preprocess_image:
+  description: Enhance the image at "{image_path}" by applying contrast adjustment,
+    noise reduction, and sharpening techniques to ensure clarity for further analysis.
+  expected_output: An enhanced version of the image ready for layout analysis and
+    text extraction.
+  agent: image_preprocessor
+  context_task_names: []
+analyze_layout:
+  description: Use the Object Location Tool to identify and describe the layout elements
+    such as sections, headings, and paragraphs in the enhanced image at "{image_path}".
+  expected_output: A detailed description of the layout components within the image.
+  agent: layout_analyzer
+  context_task_names:
+  - preprocess_image
+extract_text:
+  description: Extract readable text from the identified layout elements in the enhanced
+    image at "{image_path}" using the Text Extraction Tool.
+  expected_output: Machine-readable textual content extracted from the image.
+  agent: text_extractor
+  context_task_names:
+  - analyze_layout
+summarize_content:
+  description: Summarize the extracted text content to provide a concise overview
+    of the image's textual information. Use external NLP techniques such as BERT-based
+    models for summarization.
+  expected_output: A concise summary of the textual content found in the image.
+  agent: content_summarizer
+  context_task_names:
+  - extract_text

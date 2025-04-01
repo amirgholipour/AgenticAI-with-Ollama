@@ -1,0 +1,25 @@
+image_layout_analysis:
+  description: Analyze the image layout located at {image_path} to understand the
+    structure and arrangement of elements within the image using the Object Location
+    Tool.
+  expected_output: A detailed report on the spatial relationships and positions of
+    objects within the image.
+  agent: Layout Analyst
+  context_task_names: []
+text_extraction:
+  description: Extract text content from the image located at {image_path} to identify
+    and retrieve any textual information present using the Text Extraction Tool.
+  expected_output: A machine-readable format of all textual information found in the
+    image.
+  agent: Text Extractor
+  context_task_names:
+  - Image Layout Analysis
+summarize_report:
+  description: Summarize both the layout analysis and extracted text content into
+    a concise report.
+  expected_output: A comprehensive summary that includes insights from both the layout
+    analysis and the extracted text content.
+  agent: Report Summarizer
+  context_task_names:
+  - Text Extraction
+  - Image Layout Analysis

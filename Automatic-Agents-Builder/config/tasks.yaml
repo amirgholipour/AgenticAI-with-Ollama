@@ -1,0 +1,23 @@
+extract_text_content:
+  description: Use the Text Extraction Tool to extract all visible text content from
+    the provided image {{image_path}}.
+  expected_output: A string containing all the extracted text from the image.
+  agent: text_extraction_agent
+  context_task_names: []
+describe_spatial_layout:
+  description: Use the Object Location Tool to describe the spatial layout and positions
+    of key UI elements within the image {{image_path}}.
+  expected_output: A detailed description of the spatial layout and positions of key
+    UI elements in the image.
+  agent: layout_analysis_agent
+  context_task_names: []
+interpret_image_content:
+  description: Combine the extracted text content and spatial layout information to
+    provide an understanding or interpretation of the overall content and context
+    of the image.
+  expected_output: A comprehensive interpretation of the image content based on the
+    visible elements and text within the image.
+  agent: content_interpretation_agent
+  context_task_names:
+  - Extract Text Content
+  - Describe Spatial Layout

@@ -1,0 +1,127 @@
+analyze_user_request:
+  description: >
+    Interpret the user's input: "{user_request}".
+    Extract key requests, intentions, and any stated or implied constraints.
+  expected_output: >
+    A concise bullet-point list of:
+    - Primary requests
+    - Constraints or limitations
+    - Assumptions (if any)
+  agent: request_analyst
+  context_task_names: []
+  
+analyze_supporting_data:
+  description: >
+    Review the sub-requests from `analyze_user_request`, the available data keys {{data_keys_description}}, and available tools:
+
+    Tools:
+    {{tool_descriptions}} or 'No specific tools available'
+
+    Identify how each data key and tool can support the user's request. Think about placeholder usage (e.g., {{data}}, {{image_path}}).
+  expected_output: Insights about which data/tool can support each sub-request and which placeholders to reference.
+  agent: data_context_agent
+  context_task_names:
+    - analyze_user_request
+
+    
+decompose_into_tasks:
+  description: >
+    Based on the extracted requests and constraints, define the necessary task sequence to solve the problem.
+    Consider logical dependencies and task granularity.
+    
+    Define the tasks required to achieve the user request. Each task must have a unique name, a detailed description, the expected_output, the agent_role who will perform it, and context_task_names (a list of task names that must be completed before this task can start).
+    
+  expected_output: >
+    A structured JSON object defining:
+    - Task names
+    - Descriptions
+    - Contextual dependencies between tasks
+    - expected_output
+  agent: task_designer
+  context_task_names:
+    - analyze_user_request
+    - analyze_supporting_data
+
+design_agents:
+  description: >
+    Design an agent for each defined task, based on the required expertise and assigned tools.
+
+    Available Tools:
+    {{tool_descriptions}}
+  expected_output: >
+    JSON array listing agents with:
+    - Role
+    - Goal
+    - Backstory
+    - optionally assigned_tool_names from the Available Tools list. Only assign tools relevant to the agent's request.
+    
+    Ensure the tasks logically flow towards the final request. The final task should synthesize the results.
+
+    **Crucially:** If a task needs to use data associated with a specific key (like 'image_path'), its description **must include the placeholder exactly like this: {{image_path}}**. Do NOT insert the actual value yourself; the system will substitute it later. For example: "Extract text from the image located at {{image_path}} using the Text Extraction Tool."
+    
+    Supporting Data Keys may include placeholders such as {{image_path}}, {{document_path}}, etc. If supporting data is required, it will be provided to you—there is no need to upload it yourself.
+
+    You UTILISE  placeholders such as {{image_path}}, {{document_path}}, etc, only for passing the supporting information to the agents. Not in Expected output.
+    
+    Avoid creating any tasks or agents related to data uploading. For instance, do not include tasks such as: 'This agent handles the initial upload of images for analysis, ensuring they are properly received and stored,' or 'Load the image into the system for further processing.
+
+    
+    
+    
+  agent: agent_architect
+  context_task_names:
+    - decompose_into_tasks
+
+compile_plan:
+  description: >
+    Using the agent and task definitions, compile a complete CrewAI YAML configuration.
+
+    Requirements:
+    - Include agent and task definitions
+    - Respect task dependencies
+    - Use dynamic placeholders (e.g., {{image_path}}) exactly as specified
+    - Format output as a valid JSON object (no markdown, text, or extra commentary)
+    - for expected_output do not generate placeholders like this {{...}}, It must provide a description, for example: "A detailed description of the content" or "Output the plan ONLY as a valid JSON object adhering strictly to the following structure."
+    Tools:
+    {{tool_descriptions}}
+  expected_output: |
+   Output the plan ONLY as a valid JSON object adhering strictly to the following structure. 
+    {{
+      "agents": [
+        {{
+          "name": "Unique_Role_Name",
+          "role": "Unique Role Name",
+          "goal": "Specific request for this agent",
+          "backstory": "Brief relevant backstory",
+          "assigned_tool_names": ["Tool Name 1", "Tool Name 2"]
+        }}
+      ],
+      "tasks": [
+        {{
+          "name": "unique_task_name_1",
+          "description": "Detailed task description with placeholders like {{image_path}}",
+          "expected_output": "What this task should produce, description of the output format",
+          "agent_role": "Unique_Role_Name",
+          "context_task_names": []
+        }}
+      ]
+    }}
+  agent: plan_assembler
+  context_task_names:
+    - design_agents
+    - decompose_into_tasks
+
+validate_plan:
+  description: >
+    Ensure that the compiled plan uses only supported tools, follows valid structure, and correctly uses placeholders.
+
+    Validate:
+    - All tasks and agents are correctly defined
+    - No tool is assigned outside of {{tool_descriptions}}
+    - Placeholders are used exactly (e.g., {{image_path}}, {{document_path}}, etc), it is based on the user ask!
+    - Output format is valid JSON
+  expected_output: >
+    Either "Valid Plan" or a bullet-point list of validation errors.
+  agent: plan_validator
+  context_task_names:
+    - compile_plan
