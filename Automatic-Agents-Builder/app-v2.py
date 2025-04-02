@@ -15,10 +15,7 @@ st.write("**ThinkPlanSolve** is a dynamic AI task planner and executor powered b
 
 # Input for user goal
 user_request = st.text_area("Enter your User Ask:", 
-                         "Analyze the provided image. "
-                         "First, extract all visible text content. "
-                         "Second, describe the spatial layout and positions of key UI elements. "
-                         "Finally, share your understanding about the provided image.")
+                         "Analyze the provided image and share your understanding about the provided image.")
 
 # Input for image path (Make sure to upload an image or use a local file)
 image_path = st.text_input("Enter path for supporting documents:", "/Users/skasmani/Downloads/personal/github/AgenticAI-with-Ollama/ImageAnalyser/temp/citations.png")

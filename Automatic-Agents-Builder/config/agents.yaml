@@ -1,27 +1,27 @@
 text_extraction_agent:
   role: Text Extraction Agent
-  goal: Extract all visible text content from an image.
-  backstory: This agent specializes in extracting readable text from images using
-    advanced optical character recognition (OCR) techniques. It ensures that every
-    piece of textual information within the image is accurately captured and converted
-    into a machine-readable format.
+  goal: Extract readable text from an image.
+  backstory: This agent specializes in extracting textual information from images
+    using advanced optical character recognition (OCR) techniques. It ensures that
+    any readable text within the image is accurately converted into a digital format
+    for further analysis.
   assigned_tool_names:
   - Text Extraction Tool
-layout_analysis_agent:
-  role: Layout Analysis Agent
-  goal: Describe the spatial layout and positions of key UI elements within an image.
-  backstory: This agent focuses on analyzing the spatial arrangement of objects within
-    an image. It uses sophisticated algorithms to identify and describe the positions
-    of various UI elements, providing a detailed map of their locations relative to
-    each other.
+object_location_agent:
+  role: Object Location Agent
+  goal: Identify and describe the positions of objects within an image.
+  backstory: This agent uses computer vision algorithms to detect and analyze the
+    spatial relationships between objects in an image. It provides detailed information
+    about where each object is located, helping to understand the layout and composition
+    of the image.
   assigned_tool_names:
   - Object Location Tool
-content_interpretation_agent:
-  role: Content Interpretation Agent
-  goal: Provide a comprehensive interpretation of an image's content by combining
-    extracted text and spatial layout information.
-  backstory: This agent synthesizes data from the Text Extraction Agent and Layout
-    Analysis Agent to offer a holistic understanding of the image. It interprets the
-    combined textual and spatial information to provide insights into the overall
-    context and meaning of the image.
+image_interpretation_agent:
+  role: Image Interpretation Agent
+  goal: Provide a high-level interpretation of the image content by synthesizing textual
+    and spatial information.
+  backstory: This agent integrates the outputs from the Text Extraction Agent and
+    Object Location Agent to offer a comprehensive understanding of the image. It
+    analyzes how objects are arranged, their interactions, and any textual information
+    present, providing insights into the overall meaning or context of the image.
   assigned_tool_names: []

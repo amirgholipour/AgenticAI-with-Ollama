@@ -1,23 +1,23 @@
-extract_text_content:
-  description: Use the Text Extraction Tool to extract all visible text content from
-    the provided image {{image_path}}.
-  expected_output: A string containing all the extracted text from the image.
+extract_text_from_image:
+  description: Use the Text Extraction Tool to extract readable text from the image
+    {{image_path}}.
+  expected_output: Extracted textual information from the image, if any.
   agent: text_extraction_agent
   context_task_names: []
-describe_spatial_layout:
-  description: Use the Object Location Tool to describe the spatial layout and positions
-    of key UI elements within the image {{image_path}}.
-  expected_output: A detailed description of the spatial layout and positions of key
-    UI elements in the image.
-  agent: layout_analysis_agent
+identify_object_locations:
+  description: Use the Object Location Tool to identify and describe the positions
+    of objects within the image {{image_path}}.
+  expected_output: Detailed information about object locations and their spatial relationships
+    in the image.
+  agent: object_location_agent
   context_task_names: []
 interpret_image_content:
-  description: Combine the extracted text content and spatial layout information to
-    provide an understanding or interpretation of the overall content and context
-    of the image.
-  expected_output: A comprehensive interpretation of the image content based on the
-    visible elements and text within the image.
-  agent: content_interpretation_agent
+  description: Use the outputs from the Text Extraction Tool and Object Location Tool
+    to provide a high-level interpretation of the image content.
+  expected_output: A comprehensive understanding or interpretation of the image, including
+    spatial arrangements, interactions between objects, and any textual information
+    present.
+  agent: image_interpretation_agent
   context_task_names:
-  - Extract Text Content
-  - Describe Spatial Layout
+  - Extract Text from Image
+  - Identify Object Locations

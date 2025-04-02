@@ -57,16 +57,15 @@ design_agents:
     
     Ensure the tasks logically flow towards the final request. The final task should synthesize the results.
 
-    **Crucially:** If a task needs to use data associated with a specific key (like 'image_path'), its description **must include the placeholder exactly like this: {{image_path}}**. Do NOT insert the actual value yourself; the system will substitute it later. For example: "Extract text from the image located at {{image_path}} using the Text Extraction Tool."
+    **Crucially:** If a task needs to use data associated with a specific key (like 'image_path'), its description **must include the placeholder exactly like this: {{image_path}}**. Do NOT insert the actual value yourself; the system will substitute it later. For example: "Extract text from the image located at {{image_path}} using the Text Extraction Tool." 
+    
+    **Crucially:**Do not put placeholder in the expected_output of task!
     
     Supporting Data Keys may include placeholders such as {{image_path}}, {{document_path}}, etc. If supporting data is required, it will be provided to you—there is no need to upload it yourself.
 
-    You UTILISE  placeholders such as {{image_path}}, {{document_path}}, etc, only for passing the supporting information to the agents. Not in Expected output.
+    **Crucially:**You UTILISE  placeholders such as {{image_path}}, {{document_path}}, etc, only for passing the supporting information to the agents in the description of the task which is needed. Not in expected_output.
     
     Avoid creating any tasks or agents related to data uploading. For instance, do not include tasks such as: 'This agent handles the initial upload of images for analysis, ensuring they are properly received and stored,' or 'Load the image into the system for further processing.
-
-    
-    
     
   agent: agent_architect
   context_task_names:
