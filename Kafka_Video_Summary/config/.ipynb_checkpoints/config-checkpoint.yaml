@@ -1,0 +1,8 @@
+KAFKA_TOPIC: "Frames"
+BOOTSTRAP_SERVERS: "localhost:9092"
+FRAME_INTERVAL: 30
+BATCH_SIZE: 10
+RESIZED_WIDTH: 640
+RESIZED_HEIGHT: 480
+MODEL: "gemma3:12b"
+PROMPT: "Describe the following sequence of images extracted from a video and provide a comprehensive summary of the video's content, including observed objects, people, actions, and any notable events."
