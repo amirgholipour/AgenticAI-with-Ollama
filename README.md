@@ -7,11 +7,25 @@ This repository documents the journey of building powerful, privacy-preserving A
 
 ## 🧪 Use Cases
 
-### 1. 📸 **ImageAnalyser**  
+### 1. 📸 ImageAnalyser  
 A fully offline multi-agent system that interprets any image — including charts, dashboards, and screenshots — using local LLMs. It mimics how a human would extract text, detect layout, understand context, and summarize insights.  
 🛠️ Built with: CrewAI, Streamlit, Langchain, Unstructured, Ollama.  
 📂 Path: `ImageAnalyser/`  
 🔗 [Read full documentation](ImageAnalyser/README.md)
+
+### 2. 📸 Automatic Agents Builder
+
+An agent that autonomously builds and customizes other agents based on user requirements, streamlining the development of AI workflows.  
+🛠️ Built with: CrewAI, Ollama.  
+📂 Path: `Automatic-Agents-Builder/`  
+🔗 [Read full documentation](Automatic-Agents-Builder/README.md)
+
+### 3. 📸 Kafka Video Summary
+
+A system that consumes video data from Kafka topics, processes the content using local LLMs, and generates concise summaries for quick insights.  
+🛠️ Built with: Kafka, Ollama.  
+📂 Path: `Kafka_Video_Summary/`  
+🔗 [Read full documentation](Kafka_Video_Summary/README.md)
 
 > *More use cases will be added as this repo evolves.*
 
@@ -24,6 +38,7 @@ A fully offline multi-agent system that interprets any image — including chart
 - **🔎 Text & Layout Tools:** Langchain + Unstructured
 - **🌐 Frontend:** Streamlit
 - **🛡️ Privacy-first:** All logic runs locally — no external API calls
+- **🛡️ Kafka:** An open-source real-time data handling platform that supports low-latency, high-volume tasks.
 
 ---
 

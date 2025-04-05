@@ -1,4 +1,5 @@
 # 🤖 ThinkPlanSolve
+[Think, Plan, Solve: A Smarter Way to Tackle Problems with Multi-Agent Planning](https://medium.com/@saeedamirgholipour/building-a-recursive-multi-agent-system-with-crewai-and-ollama-898332dd8e12)
 
 *AI that Thinks, Plans, and Solves – End-to-End Automation with LLMs and Agents*
 
