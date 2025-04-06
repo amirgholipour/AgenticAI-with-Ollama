@@ -1,0 +1,63 @@
+scrape_influencer_posts:
+  description: Scrape a LinkedIn profile and extract 5 recent high-engagement posts to study tone and style.
+  expected_output: A list of tone, structure, and writing patterns extracted from the influencer's posts.
+  agent: influencer_scraper_agent
+  context_task_names: []
+
+perform_web_research:
+  description: Search and summarize high-quality articles, blogs, or posts about {{topic}}.
+  expected_output: A detailed list of current information sources and summaries related to {{topic}}.
+  agent: web_research_agent
+  context_task_names: []
+
+analyze_trends:
+  description: Analyze the research and identify trending subtopics, hashtags, public sentiment, and discussion angles around {{topic}}.
+  expected_output: A concise bullet-point list of key trends, hashtags, and topic angles relevant to {{topic}}.
+  agent: trend_analysis_agent
+  context_task_names:
+    - perform_web_research
+
+draft_post:
+  description: Create a draft LinkedIn post about {{topic}} from a {{persona}}'s perspective with a {{tone}} tone.
+  expected_output: A draft LinkedIn post written like a {{persona}}, using a {{tone}} tone and incorporating research + trend context.
+  agent: drafting_agent
+  context_task_names:
+    - scrape_influencer_posts
+    - analyze_trends
+
+generate_structured_post:
+  description: Create a structured LinkedIn post in markdown with a hook, implementation steps, and insights about {{topic}}, using {{persona}}'s perspective and {{tone}} tone.
+  expected_output: |
+    A LinkedIn post in markdown format:
+    
+    🔥 Hook (1–2 sentences)
+
+    🛠 Implementation
+    1️⃣ Step one...
+    2️⃣ Step two...
+
+    💡 Insights
+    💪 Insight 1...
+    ✨ Insight 2...
+    🎯 Insight 3...
+  agent: structured_post_writer_agent
+  context_task_names:
+    - scrape_influencer_posts
+    - analyze_trends
+
+
+
+
+# polish_post:
+#   description: Polish and optimize the drafted LinkedIn post for clarity, structure, hashtags, and engagement.
+#   expected_output: A finalized, concise, and high-engagement LinkedIn post suitable for {{persona}} in a {{tone}} voice.
+#   agent: post_polisher_agent
+#   context_task_names:
+#     - draft_post
+
+# qa_review:
+#   description: Review the final version of the post and ensure it's clear, relevant, and impactful in a {{tone}} tone by a {{persona}}.
+#   expected_output: A ready-to-post final version that meets tone, voice, structure, grammar, and clarity standards.
+#   agent: qa_agent
+#   context_task_names:
+#     - polish_post
