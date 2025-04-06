@@ -27,7 +27,7 @@ A system that consumes video data from Kafka topics, processes the content using
 📂 Path: `Kafka_Video_Summary/`  
 🔗 [Read full documentation](Kafka_Video_Summary/README.md)
 
-### 3. 📝 LinkedIn Post Creator
+### 4. 📝 LinkedIn Post Creator
 
 An intelligent agentic system that automates the creation of professional LinkedIn posts based on a given topic, tone, and persona. It scrapes influencer content, researches web trends, and generates a structured, markdown-formatted post with a hook, implementation steps, and insights.
 🛠️ Built with: crewAI, Ollama, Streamlit 
