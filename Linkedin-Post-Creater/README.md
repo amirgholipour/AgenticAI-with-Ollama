@@ -1,54 +1,112 @@
+
 <p align="center">
-    <img alt="img" src="img/img.png" width=400 />
-    <h1 align="center">Automating LinkedIn Post</h1>
-    <h3 align="center">crewAI automates my LinkedIn Posts </h3>
+    <img alt="Project Logo" src="img/img.png" width=400 />
+    <h1 align="center">Automating LinkedIn Posts with AgenticAI</h1>
+    <h3 align="center">Harnessing crewAI and Ollama for Dynamic LinkedIn Content Creation</h3>
 </p>
 
 ---
 
-> Looking for a more detailed explanation of this repository? You might be interested in the [YouTube video](https://www.youtube.com/watch?v=oIb5JqZ5ylA&ab_channel=TheNeuralMaze)! 😁 
 
+## Overview
 
-## Description 
+This repository showcases an advanced crewAI application designed to automate the creation of LinkedIn posts. Users can input a desired topic, select a professional persona, and choose a tone to generate a structured, engaging LinkedIn post. The application leverages a team of specialized agents to ensure content quality and relevance.
 
-This repository contains a crewAI application for generating LinkedIn posts automatically. 
-The crew consists of [three agents](agents.py):
+## Key Features
 
-1️⃣ LinkedIn Scraper Ninja 
+- **Dynamic Topic Input**: Users can specify any topic of interest.
+- **Persona Selection**: Tailor the post's perspective by choosing from personas like Data Scientist, Product Manager, or CTO.
+- **Tone Adjustment**: Adjust the post's tone to be Optimistic, Neutral, or Bold.
+- **Structured Output**: Generated posts follow a consistent format with hooks, implementation steps, and insights.
 
-It uses a [Selenium custom tool](tools%2Flinkedin.py) to scrape my LinkedIn profile. I need to scrape my
-posts since I want some examples for the last agent to emulate my writing style. This tool needs some env variables,
-defined in an `.env` file (you can see an example [here](.env.example)).
+## Agents Overview
 
-2️⃣ Web Researcher
+The system comprises the following agents:
 
-It fetches relevant information about a given topic. In my case, I chose the recent release of Llama3 by Meta AI, but
-you can choose whatever you want (you'll need to modify the Tasks and Agents of course ...)
+1. **LinkedIn Style Scraper**: Scrapes a specified LinkedIn profile to extract writing tone and engagement strategies.
+2. **Market Research Analyst**: Gathers the most recent and relevant articles or discussions about the specified topic.
+3. **Trend Analyst**: Identifies trending subtopics, hashtags, and public sentiment related to the topic.
+4. **Structured LinkedIn Post Writer**: Crafts a professional LinkedIn post in markdown format, incorporating the gathered information and adhering to the selected persona and tone.
+5. **Content Quality Assurance Agent**: Reviews the final post for clarity, tone consistency, and overall impact.
 
-3️⃣ Influencer Agent
-
-This agent has to deal with the information gathered by the two previous agents and write a high quality and engaging 
-LinkedIn post emulating my writing style.
-
+## Application Architecture
 
 <p align="center">
-    <img alt="img" src="img/architecture.png" width=400 />
+    <img alt="Application Architecture" src="img/architecture.png" width=600 />
 </p>
 
+The architecture ensures a seamless flow from data collection to content generation, maintaining high-quality output tailored to user specifications.
 
-## Usage
+## Setup and Usage
 
-First of all, install the necessary dependencies.
+### Prerequisites
 
-```shell
-pip install -r requirements.txt
+- **Python 3.x**: Ensure you have Python installed.
+- **Ollama Server**: The application relies on the Ollama server for LLM services. Ensure it's running at `http://localhost:11434`.
+- **Environment Variables**: Create a `.env` file with the necessary environment variables. Refer to `sample.env` for guidance.
+
+### Installation
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone https://github.com/amirgholipour/AgenticAI-with-Ollama.git
+   cd AgenticAI-with-Ollama/Linkedin-Post-Creater
+   ```
+
+2. **Install Dependencies**:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Running the Application
+
+Execute the Streamlit application:
+
+```bash
+streamlit run app.py
 ```
 
-After all the dependencies are installed, run the `main.py`.
+Upon running, the web interface will prompt you to:
 
-> Keep in mind that you need to have all the necessary env variables in your `.env` file for this to work. Also, if you
-want to change the topic of your LinkedIn post, you'll need to modify the Agents and Tasks.
+- **Enter a Topic**: Specify the subject of the LinkedIn post.
+- **Select a Persona**: Choose the professional perspective (e.g., Data Scientist).
+- **Choose a Tone**: Decide on the post's tone (e.g., Optimistic).
 
-```shell
-python3 main.py
+After providing the inputs, the system will generate a structured LinkedIn post displayed in markdown format.
+
+## Output Format
+
+The generated LinkedIn posts adhere to the following structure:
+
+```markdown
+🔥 **Hook**: Engaging opening line related to the topic.
+
+🛠 **Implementation Steps**:
+1️⃣ Step one details...
+2️⃣ Step two details...
+...
+
+💡 **Insights**:
+- 💪 Insight one...
+- ✨ Insight two...
+...
 ```
+
+This format ensures clarity, engagement, and consistency across posts.
+
+## Customization
+
+To adapt the application to different use cases:
+
+- **Agents Configuration**: Modify `agents.yaml` to adjust agent roles, goals, and tools.
+- **Tasks Configuration**: Update `tasks.yaml` to redefine task descriptions, expected outputs, and agent assignments.
+
+## Acknowledgments
+
+Special thanks to the [crewAI](https://github.com/crewAI/crewAI) team for their foundational work, and to the contributors of this project for their continuous improvements and feature enhancements.
+
+---
+
+For any issues or contributions, please refer to the [GitHub repository](https://github.com/amirgholipour/AgenticAI-with-Ollama/tree/main/Linkedin-Post-Creater).
