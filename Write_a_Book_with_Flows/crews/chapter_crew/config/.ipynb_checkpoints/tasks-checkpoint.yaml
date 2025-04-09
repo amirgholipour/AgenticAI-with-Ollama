@@ -1,0 +1,50 @@
+# tasks.yaml
+
+research_chapter:
+  description: >
+    Research the provided chapter topic '{chapter_title}' and description '{chapter_description}' to gather detailed information, key concepts, relevant facts, and potential real-world examples.
+    Focus on reliable, high-quality sources. Ensure the research aligns with the overall book goal.
+
+    Book Goal: {goal}
+    Book Outline: {book_outline}
+    Target word count for chapter: {number_of_words}
+  expected_output: >
+    A comprehensive summary of research findings, including key points, data, examples, and any important nuances relevant to the chapter topic. This will be used by the code writer and chapter writer.
+  agent: researcher
+
+generate_code:
+  description: >
+    Based on the research findings provided to you in the context and the chapter description below, generate clear, concise, and functional Python code examples for the main concepts relevant to the chapter titled "{chapter_title}".
+
+    Chapter Description: {chapter_description}
+    Goal: {goal}
+
+    For each code example, provide:
+    1. A brief markdown explanation of the concept the code illustrates.
+    2. The Python code wrapped in fenced code blocks (```python ... ```).
+    3. A short explanation of what the code snippet does and how it works.
+
+    Structure the output logically, suitable for integration into a technical book chapter.
+  expected_output: >
+    A markdown formatted string containing all the generated Python code examples with their corresponding explanations, ready to be incorporated into the chapter.
+  agent: code_writer # Agent name still needed from config
+
+write_chapter:
+  description: >
+    Write the full content for the chapter titled "{chapter_title}".
+    You will receive context containing Python code examples generated in the previous step. Use these code examples in your writing.
+
+    Details:
+    - Chapter Description: {chapter_description}
+    - Overall Topic: {topic}
+    - Book Goal: {goal}
+
+    **IMPORTANT:** Structure the entire chapter content using **Markdown formatting** (e.g., `# Chapter Title`, `## Section Header`, `*italic*`, `**bold**`, lists, code blocks ```python ... ```, etc.).
+    Integrate the provided Python code examples (from the context) seamlessly after explaining the relevant concepts.
+    Ensure the chapter flows well, is informative, accurate, and engaging for a developer audience.
+    Aim for a word count around {number_of_words} words.
+    Your final response should contain *only* the raw text content suitable for the 'content' field of the Chapter object. CrewAI will handle wrapping it into the final Pydantic object.
+  expected_output: >
+    A Pydantic Chapter object containing the 'title' (string matching "{chapter_title}") and 'content' (string, formatted in Markdown as requested in the description) for the written chapter.
+    Example structure: {"title": "Example Chapter Title", "content": "# Example Chapter Title\n\nThis is the chapter content formatted in **Markdown**..."}
+  agent: writer # Agent name still needed from config
