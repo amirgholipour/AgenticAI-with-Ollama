@@ -1,79 +1,180 @@
-# Write a Book Flow
+# 📚 AI Book Writer with CrewAI & Ollama
 
-Welcome to the Book Writing Flow, powered by [crewAI](https://crewai.com). This template is designed to help you set up a multi-agent AI system with ease, leveraging the powerful and flexible framework provided by crewAI. Our goal is to enable your agents to collaborate effectively on complex tasks, maximizing their collective intelligence and capabilities.
+Welcome to the AI Book Writer — an interactive, multi-agent book creation system powered by [CrewAI](https://github.com/joaomdmoura/crewAI), [Ollama](https://ollama.com), and [Streamlit](https://streamlit.io/). This project enables you to generate full-length books — including structured outlines and detailed chapters — using autonomous AI agents.
 
-## Overview
+---
 
-This flow will guide you through the process of writing a book by leveraging multiple AI agents, each with specific roles. Here's a brief overview of what will happen in this flow:
+## 🌟 Features
 
-1. **Generate Book Outline**: The flow starts by using the `OutlineCrew` to create a comprehensive outline for your book. This crew will search the internet, define the structure, and main topics of the book based on the provided goal and topic.
+- 🎯 Define a **book topic, goal, number of chapters, and chapter length**
+- ✍️ Auto-generates **book outlines and full chapters**
+- 📄 Combines everything into a single `.md` file
+- 🖥️ User-friendly **Streamlit interface** to guide the whole process
+- 🧠 Leverages **CrewAI multi-agent workflows** (OutlineCrew + WriteBookChapterCrew)
+- 🔧 Easy to customize agents, tasks, and flow logic
 
-2. **Write Book Chapters**: Once the outline is ready, the flow will kick off a new crew, `WriteBookChapterCrew`, for each chapter outlined in the previous step. Each crew will be responsible for writing a specific chapter, ensuring that the content is detailed and coherent.
+---
 
-3. **Join and Save Chapters**: In the final step, the flow will combine all the chapters into a single markdown file, creating a complete book. This file will be saved in the root folder of your project.
+## 📸 Screenshot
 
-By following this flow, you can efficiently produce a well-structured and comprehensive book, leveraging the power of multiple AI agents to handle different aspects of the writing process.
+> You can add a `screenshot.png` here showing the Streamlit interface and output.
 
-## Installation
+---
 
-Ensure you have Python >=3.10 <=3.13 installed on your system. First, if you haven't already, install CrewAI:
+## 🚀 How It Works
+
+This flow leverages multiple AI agents, each with a specific task in the book-writing process:
+
+1. **📘 Generate Book Outline**  
+   The `OutlineCrew` creates a chapter-by-chapter structure using the input topic and goal.
+
+2. **✍️ Write Book Chapters**  
+   The `WriteBookChapterCrew` is spun up for each chapter to write detailed content (based on your desired word count).
+
+3. **📄 Join and Save**  
+   All chapters are merged into a markdown file with your book's title as the filename.
+
+---
+
+## 🧪 Try It with the Streamlit App
+
+### 🖥️ Run the App
 
 ```bash
-pip install crewai
+# Activate your virtual environment
+source crewai-venv/bin/activate
+
+# Run the Streamlit app
+streamlit run app.py
 ```
 
-Next, navigate to your project directory and install the dependencies:
+### ✍️ App Inputs
 
-1. First lock the dependencies and then install them:
+- **Book Title**
+- **Book Topic**
+- **Goal of the Book**
+- **Number of Chapters**
+- **Words per Chapter**
+
+After submission, the system will:
+
+✅ Generate a markdown book  
+✅ Display each chapter interactively  
+✅ Save the book to a file
+
+---
+
+## 🛠 Installation
+
+### Prerequisites
+
+- Python 3.10–3.13
+- [CrewAI](https://pypi.org/project/crewai/)
+- [Ollama](https://ollama.com/) (for running LLMs locally)
+
+### Set Up
 
 ```bash
+git clone https://github.com/your-username/ai-book-writer.git
+cd ai-book-writer
+
+# Create virtual environment
+python -m venv crewai-venv
+source crewai-venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Or install crewAI tools (if needed)
 crewai install
 ```
 
-### Customizing & Dependencies
+---
 
-**Add your `OPENAI_API_KEY` into the `.env` file**  
-**Add your `SERPER_API_KEY` into the `.env` file**
+## 🔐 Configuration
 
-To customize the behavior of the book writing flow, you can update the agents and tasks defined in the `OutlineCrew` and `WriteBookChapterCrew`. If you want to adjust the flow itself, you will need to modify the flow in `main.py`.
+1. Create a `.env` file in the root folder:
 
-- **Agents and Tasks**: Modify `src/write_a_book_with_flows/config/agents.yaml` to define your agents and `src/write_a_book_with_flows/config/tasks.yaml` to define your tasks. This is where you can customize how the book outline is generated and how chapters are written.
-
-- **Flow Adjustments**: Modify `src/write_a_book_with_flows/main.py` to adjust the flow. This is where you can change how the flow orchestrates the different crews and tasks.
-
-## Running the Project
-
-To kickstart your crew of AI agents and begin task execution, run this from the root folder of your project:
-
-```bash
-crewai flow kickoff
+```env
+OPENAI_API_KEY=your_key_here
+SERPER_API_KEY=your_key_here
 ```
 
-This command initializes the write_a_book_with_flows Crew, assembling the agents and assigning them tasks as defined in your configuration.
+2. Customize agents and tasks as needed:
 
-When you kickstart the flow, it will orchestrate multiple crews to perform the tasks. The flow will first generate a book outline, then create and run a crew for each chapter, and finally join all the chapters into a single markdown file.
+- `src/.../config/agents.yaml` → Define agent roles and tools  
+- `src/.../config/tasks.yaml` → Define their goals and flows
 
-## Understanding Your Flow
+---
 
-The write_a_book_with_flows Flow is composed of multiple AI agents, each with unique roles, goals, and tools. These agents collaborate on a series of tasks, defined in `config/tasks.yaml`, leveraging their collective skills to achieve complex objectives. The `config/agents.yaml` file outlines the capabilities and configurations of each agent in your flow.
+## 🧩 Flow Structure
 
-### Flow Structure
+| Component              | Description                                                  |
+|------------------------|--------------------------------------------------------------|
+| `OutlineCrew`          | Builds the book outline using your topic and goal            |
+| `WriteBookChapterCrew`| Writes each chapter based on the generated outline           |
+| `join_and_save_chapter`| Merges chapters and saves the result in markdown format      |
 
-1. **OutlineCrew**: This crew is responsible for generating the book outline. It defines the structure and main topics of the book based on the provided goal and topic.
+Flow logic is orchestrated in `main.py`, and crews are modular for easy customization.
 
-2. **WriteBookChapterCrew**: For each chapter outlined by the `OutlineCrew`, a new `WriteBookChapterCrew` is created. Each of these crews is responsible for writing a specific chapter, ensuring detailed and coherent content.
+---
 
-3. **Join and Save**: After all chapters are written, the flow combines them into a single markdown file, creating a complete book.
+## 🧠 Understanding the AI System
 
-By understanding the flow structure, you can see how multiple crews are orchestrated to work together, each handling a specific part of the book writing process. This modular approach allows for efficient and scalable book production.
+This app is a working example of a **modular multi-agent framework** using CrewAI. Each agent:
 
-## Support
+- Has defined tools and memory
+- Operates independently
+- Collaborates through the flow logic to complete the book
 
-For support, questions, or feedback regarding the {{crew_name}} Crew or crewAI.
+It demonstrates the **power of agentic design** in real-world applications.
 
-- Visit our [documentation](https://docs.crewai.com)
-- Reach out to us through our [GitHub repository](https://github.com/joaomdmoura/crewai)
-- [Join our Discord](https://discord.com/invite/X4JWnZnxPb)
-- [Chat with our docs](https://chatg.pt/DWjSBZn)
+---
 
-Let's create wonders together with the power and simplicity of crewAI.
+## 📂 Project Structure
+
+```
+├── app.py                        # Streamlit UI
+├── main/
+│   ├── main.py                   # Flow logic (BookFlow, BookState)
+│   └── types.py                  # Chapter and outline models
+│
+├── crews/
+│   ├── outline_crew/             # Outline generation crew
+│   └── chapter_crew/             # Chapter writing crew
+│
+├── config/
+│   ├── agents.yaml               # Define agent roles
+│   └── tasks.yaml                # Define task structure
+│
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 🛠 Customization Tips
+
+- 🔧 Want longer or fewer chapters? Change the word and chapter inputs in the app.
+- 🧠 Want smarter agents? Customize your `agents.yaml` and `tasks.yaml`.
+- 📄 Want different output formats? Add PDF or EPUB support using libraries like `pdfkit` or `weasyprint`.
+
+---
+
+## 🆘 Support & Community
+
+For help or suggestions:
+
+- 📖 Visit [CrewAI Docs](https://docs.crewai.io/)
+- 🧑‍💻 Post issues or feature requests in this repo
+- 💬 Join the [CrewAI Discord](https://discord.gg/RvFtmYg8nC)
+
+---
+
+## 📜 License
+
+MIT License. See `LICENSE` for more details.
+
+---
+
+Let's create wonders together with the power of agentic AI 🧠📚✨
