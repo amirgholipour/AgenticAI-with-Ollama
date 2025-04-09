@@ -34,6 +34,12 @@ An intelligent agentic system that automates the creation of professional Linked
 📂 Path: `Linkedin-Post-Creater/`  
 🔗 [Read full documentation](Linkedin-Post-Creater/README.md)
 
+### 5. 📝 Writing a book
+
+This flow will guide you through the process of writing a book by leveraging multiple AI agents, each with specific roles.
+🛠️ Built with: crewAI, Ollama, Streamlit 
+📂 Path: `Write_a_Book_with_Flows/`  
+🔗 [Read full documentation](Write_a_Book_with_Flows/README.md)
 > *More use cases will be added as this repo evolves.*
 
 ---
